@@ -1,0 +1,49 @@
+body {
+    font-family: "Segoe UI Variable Display", "BlinkMacSystemFont", "Segoe UI", sans-serif;
+    background-color: black;
+    color: white;
+}
+
+.language-select {
+    margin-bottom: 10px;
+}
+.language-select > div {
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.language-select > div:hover {
+    background-color: #ffffff11;
+}
+
+.language-table {
+    display: none;
+    border-collapse: collapse;
+}
+.language-table.show {
+    display: table;
+}
+.language-table > .row {
+    display: table-row;
+}
+.language-table > .row.title-row {
+    font-weight: bold;
+}
+.language-table > .row > .cell {
+    display: table-cell;
+    border: 1px solid #ffffff44;
+    padding: 5px 10px;
+}
+
+@media print {
+    body {
+        background-color: unset;
+        color: unset;
+    }
+    .language-select {
+        display: none;
+    }
+    .language-table > .row > .cell {
+        border-color: #00000044;
+    }
+}
