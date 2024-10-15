@@ -1,5 +1,6 @@
 import { wrapContent } from "./js/wrap.js";
 
+document.querySelector('.action__print').addEventListener('click', () => {window.print()});
 document.querySelector('.action__open-file').addEventListener('change', function (e) {
     e.preventDefault();
     const reader = new FileReader();
