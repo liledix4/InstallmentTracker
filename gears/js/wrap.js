@@ -3,6 +3,12 @@ import { languages } from "./languages.js";
 let langList = [];
 
 export function wrapContent(obj) {
+    obj = JSON.parse(obj);
+
+    $('.language-select').html('');
+    $('.language-contents').html('');
+    langList = [];
+
     obj.forEach(currData => {
         if (currData.title[0] === '<LANGUAGES>') {
             currData.list.forEach(arrElement => {

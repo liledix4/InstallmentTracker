@@ -1,4 +1,0 @@
-[submodule "gears/modules/JS-ReadFile"]
-	path = gears/modules/JS-ReadFile
-	url = https://github.com/liledix4/JS-ReadFile.git
-	branch = main
