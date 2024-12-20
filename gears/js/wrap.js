@@ -3,7 +3,9 @@ import { languages } from "./languages.js";
 let langList = [];
 
 export function wrapContent(obj) {
+    console.log(obj);
     obj = JSON.parse(obj);
+    console.log(obj);
 
     document.querySelector('.language-select').innerHTML = '';
     document.querySelector('.language-contents').innerHTML = '';
