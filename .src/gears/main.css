@@ -1,0 +1,202 @@
+body {
+    font-family: 'Segoe UI Variable Display', 'BlinkMacSystemFont', 'Segoe UI', sans-serif;
+    background-color: #222;
+    color: white;
+    margin: 20px auto;
+    max-width: calc(793px - 38px * 2);
+    font-size: 14px;
+}
+
+a {
+    display: inline-block;
+    color: inherit;
+    border: 2px solid #ffffff22;
+    background-color: transparent;
+    text-decoration: unset;
+    padding: 2px 6px;
+}
+a:hover {
+    background-color: #ffffff22;
+}
+a:active {
+    background-color: #009444;
+    color: white;
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px dashed #ffffff44;
+    user-select: none;
+}
+.top-bar h1 {margin: unset;}
+.top-bar > .flex {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+.top-bar > .flex > .buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.top-bar > .flex > :last-child {
+    justify-content: flex-end;
+    text-align: right;
+}
+.top-bar .flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.version-number {
+    font-style: italic;
+    font-size: .8em;
+}
+
+.action__open-file_hidden {
+    display: none;
+}
+.actions > * {
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    border: 2px solid #ffffff22;
+    background-color: transparent;
+    padding: 2px 6px;
+}
+.actions > *:hover {
+    background-color: #ffffff22;
+}
+.actions > *:active {
+    background-color: #009444;
+    color: white;
+}
+
+.language-select > div {
+    display: inline-block;
+    padding: 2px 6px;
+    border: 2px solid #ffffff22;
+    cursor: pointer;
+}
+.language-select > div:hover {
+    background-color: #ffffff22;
+}
+.language-select > div:active {
+    background-color: #009444;
+    color: white;
+}
+
+.language-table {
+    display: none;
+    border-collapse: collapse;
+}
+.language-table.show {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+.language-table > .row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.language-table > .row:not(:first-child) {
+    border-top: 2px dashed #ffffff44;
+    padding-top: 10px;
+}
+.language-table > .row > .meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.language-table > .row > .meta > .title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.language-table > .row > .meta > .right {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.language-table > .row > .meta > .right > div {
+    padding: 2px 10px;
+    text-align: right;
+    border-left: 1px solid #ffffff44;
+}
+
+.dates {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.dates > div {
+    padding: 3px 10px;
+    border-right: 1px solid #ffffff44;
+}
+.dates > .overdue {
+    background-color: #880000;
+    color: white;
+}
+.dates > .done {
+    color: #ffffff44;
+    text-decoration: line-through;
+}
+
+@media all and (max-width: calc(793px - 38px * 2 + 20px * 2)) {
+    body {
+        margin-left: 20px;
+        margin-right: 20px;
+        width: unset;
+    }
+}
+@media all and (max-width: 500px) {
+    .top-bar > .flex {
+        flex-direction: column;
+        align-items: unset;
+        justify-content: unset;
+    }
+    .top-bar > .flex > :last-child {
+        justify-content: unset;
+        text-align: unset;
+    }
+    .top-bar .flex-column {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+}
+@media print {
+    body {
+        background-color: unset;
+        color: unset;
+        width: unset;
+        margin: unset;
+    }
+    .top-bar {
+        display: none;
+    }
+    .language-table > .row:not(:first-child) {
+        border-top-color: #00000044;
+    }
+    .language-table > .row > .meta > .right > div {
+        border-left-color: #00000044;
+    }
+    .dates > div {
+        border-right-color: #00000044;
+    }
+    .dates > .done {
+        color: #00000044;
+    }
+}
