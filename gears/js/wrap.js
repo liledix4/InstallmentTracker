@@ -5,15 +5,15 @@ let langList = [];
 export function wrapContent(obj) {
     obj = JSON.parse(obj);
 
-    $('.language-select').html('');
-    $('.language-contents').html('');
+    document.querySelector('.language-select').innerHTML = '';
+    document.querySelector('.language-contents').innerHTML = '';
     langList = [];
 
     obj.forEach(currData => {
         if (currData.title[0] === '<LANGUAGES>') {
             currData.list.forEach(arrElement => {
-                $('.language-select').append(`<div value="${arrElement}">${languages[arrElement].langName}</div>`);
-                $('.language-contents').append(`
+                document.querySelector('.language-select').innerHTML += `<div value="${arrElement}">${languages[arrElement].langName}</div>`;
+                document.querySelector('.language-contents').innerHTML += `
                     <div class="language-table" value="${arrElement}">
                         <div class="row title-row">
                             <div class="cell">${languages[arrElement].title}</div>
@@ -25,13 +25,13 @@ export function wrapContent(obj) {
                             <div class="cell">${languages[arrElement].account}</div>
                         </div>
                     </div>
-                `);
+                `;
                 langList.push(arrElement);
             });
         }
         else {
             for (let currDataLang = 0; currDataLang < langList.length; currDataLang++) {
-                $(`.language-contents > div[value="${langList[currDataLang]}"]`).append(`
+                document.querySelector(`.language-contents > div[value="${langList[currDataLang]}"]`).innerHTML += `
                     <div class="row">
                         <div class="cell">${currData.title[currDataLang]}</div>
                         <div class="cell">` + parseInt(currData.monthly_payment).toLocaleString(languages[langList[currDataLang]].locale) + `</div>
@@ -41,14 +41,16 @@ export function wrapContent(obj) {
                         <div class="cell">${currData.platform}</div>
                         <div class="cell">${currData.account}</div>
                     </div>
-                `);
+                `;
             }
         }
     });
-    $('.language-select > div').click(function(){
-        const lang = $(this).attr('value');
-        $('.language-table.show').removeClass('show');
-        $(`.language-table[value="${lang}"]`).addClass('show');
+    document.querySelectorAll('.language-select > div').forEach((element) => {
+        element.addEventListener('click', (event) => {
+            const lang = event.currentTarget.getAttribute('value');
+            document.querySelector('.language-table.show').classList.remove('show');
+            document.querySelector(`.language-table[value="${lang}"]`).classList.add('show');
+        });
     });
-    $('.language-table').eq(0).addClass('show');
+    document.querySelectorAll('.language-table')[0].classList.add('show');
 }
