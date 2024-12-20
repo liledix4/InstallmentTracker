@@ -3,9 +3,7 @@ import { languages } from "./languages.js";
 let langList = [];
 
 export function wrapContent(obj) {
-    console.log(obj);
     obj = JSON.parse(obj);
-    console.log(obj);
 
     document.querySelector('.language-select').innerHTML = '';
     document.querySelector('.language-contents').innerHTML = '';
@@ -13,22 +11,24 @@ export function wrapContent(obj) {
 
     obj.forEach(currData => {
         if (currData.title[0] === '<LANGUAGES>') {
-            currData.list.forEach(arrElement => {
-                document.querySelector('.language-select').innerHTML += `<div value="${arrElement}">${languages[arrElement].langName}</div>`;
-                document.querySelector('.language-contents').innerHTML += `
-                    <div class="language-table" value="${arrElement}">
-                        <div class="row title-row">
-                            <div class="cell">${languages[arrElement].title}</div>
-                            <div class="cell">${languages[arrElement].monthly_payment}</div>
-                            <div class="cell">${languages[arrElement].day_of_payment}</div>
-                            <div class="cell">${languages[arrElement].closest_month}</div>
-                            <div class="cell">${languages[arrElement].ends}</div>
-                            <div class="cell">${languages[arrElement].platform}</div>
-                            <div class="cell">${languages[arrElement].account}</div>
+            currData.list.forEach((arrElement) => {
+                if (languages[arrElement]) {
+                    document.querySelector('.language-select').innerHTML += `<div value="${arrElement}">${languages[arrElement].langName}</div>`;
+                    document.querySelector('.language-contents').innerHTML += `
+                        <div class="language-table" value="${arrElement}">
+                            <div class="row title-row">
+                                <div class="cell">${languages[arrElement].title}</div>
+                                <div class="cell">${languages[arrElement].monthly_payment}</div>
+                                <div class="cell">${languages[arrElement].day_of_payment}</div>
+                                <div class="cell">${languages[arrElement].closest_month}</div>
+                                <div class="cell">${languages[arrElement].ends}</div>
+                                <div class="cell">${languages[arrElement].platform}</div>
+                                <div class="cell">${languages[arrElement].account}</div>
+                            </div>
                         </div>
-                    </div>
-                `;
-                langList.push(arrElement);
+                    `;
+                    langList.push(arrElement);
+                }
             });
         }
         else {
