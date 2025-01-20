@@ -1,1 +1,180 @@
-import{languages}from"./languages.js";let langList=[];function getDates(e,t,n,a,s){let l={numbers:{done:[],overdue:[],remaining:[]},strings:{done:[],overdue:[],remaining:[]}};const r=new Date,o=r.getDate(),i=r.getMonth(),c=r.getFullYear(),u=t.split("."),g=n.split("."),d=a.split("."),m={sM:parseInt(u[1])-1,sY:parseInt(u[0]),cM:parseInt(g[1])-1,cY:parseInt(g[0]),eM:parseInt(d[1])-1,eY:parseInt(d[0])};for(let t=m.sY;t<=m.eY;t++){let n=0,a=11;t===m.sY&&(n=m.sM),t===m.eY&&(a=m.eM);for(let r=n;r<=a;r++){const n={day:"numeric",month:"short",year:"numeric"},a=new Date(t,r,e).toLocaleString(s,n),u=[t,r,e];m.cY>t||m.cY==t&&m.cM>r?(l.numbers.done.push(u),l.strings.done.push(a)):t<c||t==c&&r<i||t==c&&r==i&&e<=o?(l.numbers.overdue.push(u),l.strings.overdue.push(a)):(l.numbers.remaining.push(u),l.strings.remaining.push(a))}}return l}export function wrapContent(e){if((e=JSON.parse(e)).list){document.querySelector(".language-select").innerHTML="",document.querySelector(".contents").innerHTML="",langList=[],e.languages?e.languages.forEach((e=>{languages[e]?langList.push(e):langList.push(null)})):langList.push("English"),langList.forEach((e=>{null!==e&&(document.querySelector(".language-select").innerHTML+=`<div value='${e}'>${languages[e].langName}</div>`,document.querySelector(".contents").innerHTML+=`<div class='language-table' value='${e}'></div>`)}));for(let t=0;t<langList.length;t++)if(null!==langList[t]){const n=languages[langList[t]].locale;e.list.forEach((a=>{let s={title:a.title[t],platform:"?",account:"?",monthly_payment:parseInt(a.monthly_payment).toLocaleString(languages[langList[t]].locale)+" "+e.currency[t],dates:""};e.platforms[a.platform][t]&&(s.platform=e.platforms[a.platform][t]),e.accounts[a.account][t]&&(s.account=e.accounts[a.account][t]);const l=getDates(a.day_of_payment,a.started,a.closest_month,a.ends,n);l.strings.done.forEach((e=>{s.dates+=`<div class='done'>${e}</div>`})),l.strings.overdue.forEach((e=>{s.dates+=`<div class='overdue'>${e}</div>`})),l.strings.remaining.forEach((e=>{s.dates+=`<div>${e}</div>`})),document.querySelector(`.contents > div[value='${langList[t]}']`).innerHTML+=`<div class='row'><div class='meta'><div class='title'>${s.title}</div><div class='right'><div>${s.platform}</div><div>${s.account}</div><div><strong>${s.monthly_payment}</strong></div></div></div><div class='dates'>${s.dates}</div></div>`}))}document.querySelectorAll(".language-select > div").forEach((e=>{e.addEventListener("click",(e=>{const t=e.currentTarget.getAttribute("value");document.querySelector(".language-table.show").classList.remove("show"),document.querySelector(`.language-table[value='${t}']`).classList.add("show")}))})),document.querySelectorAll(".language-table")[0].classList.add("show")}}
+import { languages } from './languages.min.js';
+
+let langList = [];
+
+function getDates(day, start, closest, end, locale)
+{
+    let returnObject =
+    {
+        numbers:
+        {
+            done: [],
+            overdue: [],
+            remaining: [],
+        },
+        strings:
+        {
+            done: [],
+            overdue: [],
+            remaining: [],
+        },
+    };
+    const todayObject = new Date();
+    const today =
+    {
+        D: todayObject.getDate(),
+        M: todayObject.getMonth(),
+        Y: todayObject.getFullYear(),
+    };
+
+    const startArray = start.split('.');
+    const closestArray = closest.split('.');
+    const endArray = end.split('.');
+    const o =
+    {
+        sM: parseInt(startArray[1]) - 1,
+        sY: parseInt(startArray[0]),
+        cM: parseInt(closestArray[1]) - 1,
+        cY: parseInt(closestArray[0]),
+        eM: parseInt(endArray[1]) - 1,
+        eY: parseInt(endArray[0]),
+    };
+
+    for (let currYear = o.sY; currYear <= o.eY; currYear++)
+    {
+        let startMonth = 0;
+        let endMonth = 11;
+        if (currYear === o.sY) startMonth = o.sM;
+        if (currYear === o.eY) endMonth = o.eM;
+
+        for (let currMonth = startMonth; currMonth <= endMonth; currMonth++)
+        {
+            const readableDateObject = new Date(currYear, currMonth, day);
+            const readableFormat = {day: 'numeric', month: 'short', year: 'numeric'};
+            const readableString = readableDateObject.toLocaleString(locale, readableFormat);
+            const dateArray = [currYear, currMonth, day];
+
+            if (
+                o.cY > currYear ||
+                (o.cY == currYear && o.cM > currMonth)
+            )
+            {
+                returnObject.numbers.done.push( dateArray );
+                returnObject.strings.done.push( readableString );
+            }
+            else if (
+                currYear < today.Y ||
+                (currYear == today.Y && currMonth < today.M) ||
+                (currYear == today.Y && currMonth == today.M && day <= today.D)
+            )
+            {
+                returnObject.numbers.overdue.push( dateArray );
+                returnObject.strings.overdue.push( readableString );
+            }
+            else
+            {
+                returnObject.numbers.remaining.push( dateArray );
+                returnObject.strings.remaining.push( readableString );
+            }
+        }
+    }
+    return returnObject;
+}
+
+export function wrapContent(obj)
+{
+    obj = JSON.parse(obj);
+    if (!obj.list) return;
+
+
+    document.querySelector('.language-select').innerHTML = '';
+    document.querySelector('.contents').innerHTML = '';
+    langList = [];
+
+
+    if (obj.languages) obj.languages.forEach(
+        language => {
+            if (languages[language]) langList.push(language);
+            else langList.push(null);
+        }
+    );
+    else {langList.push('English');}
+
+
+    langList.forEach(language =>
+    {
+        if (language !== null)
+        {
+            document.querySelector('.language-select').innerHTML += `<div value='${language}'>${languages[language].langName}</div>`;
+            document.querySelector('.contents').innerHTML += `<div class='language-table' value='${language}'></div>`;
+        }
+    });
+
+
+    for (let langIndex = 0; langIndex < langList.length; langIndex++)
+    {
+        if (langList[langIndex] !== null)
+            {
+            const currLang = languages[langList[langIndex]]['locale'];
+
+            obj.list.forEach(currJSONObj =>
+            {
+                let finalStrings = {
+                    title: currJSONObj.title[langIndex],
+                    platform: '?',
+                    account: '?',
+                    monthly_payment: parseInt(currJSONObj.monthly_payment).toLocaleString(languages[langList[langIndex]].locale) + ' ' + obj.currency[langIndex],
+                    dates: ''
+                };
+                if (obj.platforms[currJSONObj.platform][langIndex])
+                    finalStrings.platform = obj.platforms[currJSONObj.platform][langIndex];
+                if (obj.accounts[currJSONObj.account][langIndex])
+                    finalStrings.account = obj.accounts[currJSONObj.account][langIndex];
+
+                const listOfDates = getDates(
+                    currJSONObj.day_of_payment,
+                    currJSONObj.started,
+                    currJSONObj.closest_month,
+                    currJSONObj.ends,
+                    currLang
+                );
+
+                listOfDates.strings.done.forEach(date => {
+                    finalStrings.dates += `<div class='done'>${date}</div>`;
+                });
+                listOfDates.strings.overdue.forEach(date => {
+                    finalStrings.dates += `<div class='overdue'>${date}</div>`;
+                });
+                listOfDates.strings.remaining.forEach(date => {
+                    finalStrings.dates += `<div>${date}</div>`;
+                });
+
+                document.querySelector(`.contents > div[value='${langList[langIndex]}']`).innerHTML += `
+                    <div class='row'>
+                        <div class='meta'>
+                            <div class='title'>${finalStrings.title}</div>
+                            <div class='right'>
+                                <div>${finalStrings.platform}</div>
+                                <div>${finalStrings.account}</div>
+                                <div><strong>${finalStrings.monthly_payment}</strong></div>
+                            </div>
+                        </div>
+                        <div class='dates'>${finalStrings.dates}</div>
+                    </div>
+                `;
+            });
+        }
+    }
+
+
+    document.querySelectorAll('.language-select > div').forEach((element) =>
+    {
+        element.addEventListener('click', (event) =>
+        {
+            const lang = event.currentTarget.getAttribute('value');
+            document.querySelector('.language-table.show').classList.remove('show');
+            document.querySelector(`.language-table[value='${lang}']`).classList.add('show');
+        });
+    });
+    document.querySelectorAll('.language-table')[0].classList.add('show');
+}

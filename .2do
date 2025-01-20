@@ -1,8 +1,14 @@
 # 2do
 
-- In addition to the last year-month of payment, add support of **term of installment** (in months). In this case, the latest year-month should be automatically calculated.
-- No documentation!!!!
-- It depends too much on JSON file that should be created separately.
-- Make it possible to edit the list of installments **right in the browser**. With ability to:
-    - Auto-save to and auto-retrieve from the local storage of the browser.
-    - Export JSON.
+- [ ] In addition to the last year-month of payment, add support of **term of installment** (in months). In this case, the latest year-month should be automatically calculated.
+- [ ] No documentation!!!!
+- [ ] It depends too much on JSON file that should be created separately.
+- [ ] Make it possible to edit the list of installments **right in the browser**. With ability to:
+    - [ ] Auto-save to and auto-retrieve from the local storage of the browser.
+    - [ ] Export JSON.
+
+****
+
+- [ ] Sum of all payments
+- [ ] Current date (for printing)
+- [ ] Links
